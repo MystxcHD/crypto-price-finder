@@ -43,25 +43,27 @@ userInput = str(input(f"{45*'-'}\nEnter cryptocurrency ('done' to exit program):
 while userInput != "done":
   
   endpoint = "https://api.coingecko.com/api/v3/simple/price"
-  
   try:
-    coin_id = f"{userInput.lower()}"
-    response = requests.get(f"{endpoint}?ids={coin_id.lower()}&vs_currencies=usd")
-  
-    priceData = response.json()
-    price = priceData[coin_id]["usd"]
-    priceFormatted = format_number(price)
-    print(f"{45*'-'}\nThe price of {coin_id.capitalize()} is ${priceFormatted}")
-      
+    try:
+        coin_id = f"{userInput.lower()}"
+        response = requests.get(f"{endpoint}?ids={coin_id.lower()}&vs_currencies=usd")
+    
+        priceData = response.json()
+        price = priceData[coin_id]["usd"]
+        priceFormatted = format_number(price)
+        print(f"{45*'-'}\nThe price of {coin_id.capitalize()} is ${priceFormatted}")
+        
+    except:
+        coin_id = ticker_to_name(userInput)
+        response = requests.get(f"{endpoint}?ids={coin_id.lower()}&vs_currencies=usd")
+    
+        priceData = response.json()
+        price = priceData[coin_id]["usd"]
+        priceFormatted = format_number(price)
+        print(f"{45*'-'}\nThe current price of {coin_id.capitalize()} is ${priceFormatted}")
   except:
-    coin_id = ticker_to_name(userInput)
-    response = requests.get(f"{endpoint}?ids={coin_id.lower()}&vs_currencies=usd")
-  
-    priceData = response.json()
-    price = priceData[coin_id]["usd"]
-    priceFormatted = format_number(price)
-    print(f"{45*'-'}\nThe current price of {coin_id.capitalize()} is ${priceFormatted}")
-      
+      print(f"{45*'-'}\nPlease provide the name of a valid cryptocurrency (e.g bitcoin)")  
+
   userInput = str(input(f"{45*'-'}\nEnter cryptocurrency ('done' to exit program): "))
 
 print(f"{45*'-'}\nProgram has been exited\n{45*'-'}")
