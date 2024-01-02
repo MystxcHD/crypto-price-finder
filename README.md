@@ -1,2 +1,2 @@
 # Crypto Price Finder
-Playground for the CoinGecko API 
+Uses the CoinGeckoAPI to grab relevant cryptocurrency information given the ticker symbol of the coin.
